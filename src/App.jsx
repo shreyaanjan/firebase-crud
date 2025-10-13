@@ -9,6 +9,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes"
 import { onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth } from "./config/firebase"
+import { ToastContainer } from "react-toastify"
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="/add-contact" element={<ProtectedRoutes Component={AddContact}  isLoggedIn={isLoggedIn} />} />
                 <Route path="/edit-contact/:id" element={<ProtectedRoutes Component={EditContact}  isLoggedIn={isLoggedIn} />} />
             </Routes>
+            <ToastContainer />
         </BrowserRouter>
     )
 }

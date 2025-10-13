@@ -9,7 +9,7 @@ const PhoneBook = () => {
     useEffect(() => {
         displayContact()
     }, [contact])
-    
+
     const navigate = useNavigate()
 
     const displayContact = async () => {
@@ -37,51 +37,55 @@ const PhoneBook = () => {
     }
 
     return (
-        <div className="container mx-auto mt-5">
-            <div className="flex items-center justify-between">
-                <h2>Phonebook Details</h2>
-                <button type="button" onClick={()=>navigate("/add-contact")}  className="text-white bg-[#ff5d22] hover:bg-[#e24d14] font-medium rounded-md text-sm px-7 py-2 flex items-center gap-2 transition">Add Contact</button>
-            </div>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Number
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Mail
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            contact.map((user) => {
-                                return <tr key={user.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {user.name}
-                                    </th>
-                                    <td className="px-6 py-4">
-                                        {user.num}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {user.mail}
-                                    </td>
-                                    <td className="flex item-center gap-5 px-6 py-4">
-                                        <Link to={`/edit-contact/${user.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
-                                        <button onClick={() => handleDelete(user.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</button>
-                                    </td>
-                                </tr>
-                            })
-                        }
-                    </tbody>
-                </table>
+        <div className="bg-[#D9F1FF] height pt-5">
+            <div className="container mx-auto">
+                <div className="flex items-center justify-between">
+                    <h2 className="font-bold uppercase text-xl">Phonebook Details</h2>
+                    <button type="button" onClick={() => navigate("/add-contact")} className="text-white bg-gradient-to-br from-blue-600 to-blue-800  hover:from-blue-700 hover:to-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold uppercase rounded-lg text-sm px-6 py-2 w-full sm:w-auto transform transition-all duration-300 ease-in-out">
+                        Add Contact
+                    </button>
+                </div>
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-300 uppercase bg-[#010e37]">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Number
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Mail
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                contact.map((user) => {
+                                    return <tr key={user.id} className="bg-white text-gray-900 !border-b !border-gray-300">
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                            {user.name}
+                                        </th>
+                                        <td className="px-6 py-4">
+                                            {user.num}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {user.mail}
+                                        </td>
+                                        <td className="flex item-center gap-5 px-6 py-4">
+                                            <Link to={`/edit-contact/${user.id}`} className="text-lg text-green-600 dark:text-green-500 hover:underline"><i className="bi bi-pencil-square"></i></Link>
+                                            <button onClick={() => handleDelete(user.id)} className="text-lg text-red-600 dark:text-red-500 hover:underline"><i className="bi bi-trash3"></i></button>
+                                        </td>
+                                    </tr>
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
