@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
     const [input, setInput] = useState({ email: '', password: '', confirmPassword: '' })
+    const [loader, setLoader] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -18,6 +19,7 @@ const Login = () => {
     }
 
     const signIn = async () => {
+        setLoader(true)
         try {
             let user = await signInWithEmailAndPassword(auth, input.email, input.password)
             if (user) {
@@ -34,8 +36,9 @@ const Login = () => {
                     ? "Wrong Password !"
                     : "Login Failed !"
             );
+        } finally {
+            setLoader(false)
         }
-
     }
 
     return (
@@ -58,8 +61,8 @@ const Login = () => {
                     <input type="password" onChange={handleChange} value={input.password} id="password"
                         placeholder="*********" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300" />
                 </div>
-                <button type="submit" className="text-white uppercase bg-gradient-to-br from-blue-600 to-blue-800  hover:from-blue-700 hover:to-blue-900 focus:outline-none font-semibold rounded-lg text-sm px-6 py-2 w-full transform transition-all duration-300 ease-in-ou">
-                    Login
+                <button type="submit" className="text-white uppercase bg-gradient-to-br from-blue-600 to-blue-800  hover:from-blue-700 hover:to-blue-900 focus:outline-none font-semibold rounded-lg text-sm px-6 py-2 w-full transform transition-all duration-300 ease-in-out">
+                    {!loader ? "Login" : <span className="loader"></span>}
                 </button>
                 <p className="mt-4 text-center text-sm text-gray-500">
                     Don't have an account?{' '}

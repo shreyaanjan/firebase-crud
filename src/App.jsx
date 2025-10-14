@@ -13,17 +13,21 @@ import { ToastContainer } from "react-toastify"
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLoggedIn(true)
+                setLoader(false)
             } else {
                 setIsLoggedIn(false)
+                setLoader(true)
             }
         })
         return () => unsubscribe()
     }, [])
+
     
     return (
         <BrowserRouter>
