@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify"
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -22,31 +21,21 @@ const App = () => {
             } else {
                 setIsLoggedIn(false)
             }
-            setLoader(false)
         })
         return () => unsubscribe()
     }, [])
 
-
     return (
         <BrowserRouter>
-            {loader ? (
-                <div className="flex justify-center items-center min-h-screen text-white text-xl">
-                    <div className="loader"></div>
-                </div>
-            ) : (
-                <>
-                    <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-                    <Routes>
-                        <Route path="/" element={<ProtectedRoutes Component={PhoneBook} isLoggedIn={isLoggedIn} />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<SignUp />} />
-                        <Route path="/add-contact" element={<ProtectedRoutes Component={AddContact} isLoggedIn={isLoggedIn} />} />
-                        <Route path="/edit-contact/:id" element={<ProtectedRoutes Component={EditContact} isLoggedIn={isLoggedIn} />} />
-                    </Routes>
-                    <ToastContainer />
-                </>
-            )}
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Routes>
+                <Route path="/" element={<ProtectedRoutes Component={PhoneBook} isLoggedIn={isLoggedIn} />} />
+                <Route path="/login" element={<Login />}  />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/add-contact" element={<ProtectedRoutes Component={AddContact}  isLoggedIn={isLoggedIn} />} />
+                <Route path="/edit-contact/:id" element={<ProtectedRoutes Component={EditContact}  isLoggedIn={isLoggedIn} />} />
+            </Routes>
+            <ToastContainer />
         </BrowserRouter>
     )
 }
