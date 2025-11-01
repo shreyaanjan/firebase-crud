@@ -19,27 +19,34 @@ const App = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLoggedIn(true)
-                setLoader(false)
             } else {
                 setIsLoggedIn(false)
-                setLoader(true)
             }
+            setLoader(false)
         })
         return () => unsubscribe()
     }, [])
 
-    
+
     return (
         <BrowserRouter>
-            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-            <Routes>
-                <Route path="/" element={<ProtectedRoutes Component={PhoneBook} isLoggedIn={isLoggedIn} />} />
-                <Route path="/login" element={<Login />}  />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/add-contact" element={<ProtectedRoutes Component={AddContact}  isLoggedIn={isLoggedIn} />} />
-                <Route path="/edit-contact/:id" element={<ProtectedRoutes Component={EditContact}  isLoggedIn={isLoggedIn} />} />
-            </Routes>
-            <ToastContainer />
+            {loader ? (
+                <div className="flex justify-center items-center min-h-screen text-white text-xl">
+                    <div className="loader"></div>
+                </div>
+            ) : (
+                <>
+                    <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                    <Routes>
+                        <Route path="/" element={<ProtectedRoutes Component={PhoneBook} isLoggedIn={isLoggedIn} />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/add-contact" element={<ProtectedRoutes Component={AddContact} isLoggedIn={isLoggedIn} />} />
+                        <Route path="/edit-contact/:id" element={<ProtectedRoutes Component={EditContact} isLoggedIn={isLoggedIn} />} />
+                    </Routes>
+                    <ToastContainer />
+                </>
+            )}
         </BrowserRouter>
     )
 }
